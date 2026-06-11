@@ -5,11 +5,42 @@ import { ExternalLink, Star, Compass, Music, RefreshCw, Trophy, BookOpen, Layers
 import { motion, AnimatePresence } from "motion/react";
 
 export default function NotebookDirectory() {
+  const [notebooks, setNotebooks] = useState<NotebookLM[]>(BUILT_NOTEBOOKS);
   const [selectedUnit, setSelectedUnit] = useState<number | "all">("all");
+  const [isSyncing, setIsSyncing] = useState(false);
+  const [syncStatus, setSyncStatus] = useState<string | null>(null);
+
+  const handleSync = async () => {
+    setIsSyncing(true);
+    setSyncStatus("Retrieving live document...");
+    try {
+      const response = await fetch("/api/sync-notebooks", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" }
+      });
+      if (!response.ok) {
+        throw new Error(`Sync failed with status: ${response.status}`);
+      }
+      const result = await response.json();
+      if (result.success && result.notebooks) {
+        setNotebooks(result.notebooks);
+        setSyncStatus(`Sync Success: Loaded ${result.notebooks.length} notebooks.`);
+        // Reset status message after a few seconds
+        setTimeout(() => setSyncStatus(null), 5000);
+      } else {
+        setSyncStatus(`Sync Error: ${result.error || "Could not parse Doc"}`);
+      }
+    } catch (err: any) {
+      console.error("Fetch sync failed:", err);
+      setSyncStatus(`Connection Failed: ${err.message}`);
+    } finally {
+      setIsSyncing(false);
+    }
+  };
 
   const filteredNotebooks = selectedUnit === "all" 
-    ? BUILT_NOTEBOOKS 
-    : BUILT_NOTEBOOKS.filter((nb) => nb.unit === selectedUnit);
+    ? notebooks 
+    : notebooks.filter((nb) => nb.unit === selectedUnit);
 
   // Helper to resolve corresponding Chapter for an objective in the raw data
   const getChapterForObjective = (objective: string): number => {
@@ -37,16 +68,35 @@ export default function NotebookDirectory() {
           </p>
         </div>
 
-        {/* Dynamic highlights */}
-        <div className="grid grid-cols-2 gap-4 shrink-0 relative z-10 w-full md:w-auto font-mono">
-          <div className="p-4 rounded-none bg-black border border-white/5 text-left">
-            <span className="block text-[10px] text-zinc-500 font-bold uppercase tracking-wider">Live Notebooks</span>
-            <span className="text-xl sm:text-2xl font-black text-[#cbff00] mt-0.5 block">8 Active</span>
+        {/* Dynamic highlights & Live Action Sync Button */}
+        <div className="flex flex-col gap-3 shrink-0 relative z-10 w-full md:w-auto font-mono">
+          <div className="grid grid-cols-2 gap-4">
+            <div className="p-4 rounded-none bg-black border border-white/5 text-left">
+              <span className="block text-[10px] text-zinc-500 font-bold uppercase tracking-wider">Live Notebooks</span>
+              <span className="text-xl sm:text-2xl font-black text-[#cbff00] mt-0.5 block">{notebooks.length} Active</span>
+            </div>
+            <div className="p-4 rounded-none bg-black border border-white/5 text-left">
+              <span className="block text-[10px] text-zinc-500 font-bold uppercase tracking-wider">Co-Authors</span>
+              <span className="text-xl sm:text-2xl font-black text-white mt-0.5 block">
+                {Array.from(new Set(notebooks.flatMap(n => n.authors))).filter(a => a !== "Independent Study").length} Students
+              </span>
+            </div>
           </div>
-          <div className="p-4 rounded-none bg-black border border-white/5 text-left">
-            <span className="block text-[10px] text-zinc-500 font-bold uppercase tracking-wider">Co-Authors</span>
-            <span className="text-xl sm:text-2xl font-black text-white mt-0.5 block">6 Students</span>
-          </div>
+
+          <button
+            onClick={handleSync}
+            disabled={isSyncing}
+            className={`w-full px-4 py-3 bg-white hover:bg-[#cbff00] disabled:bg-zinc-800 disabled:text-zinc-500 text-black font-black text-xs uppercase tracking-wider rounded-none transition flex items-center justify-center gap-2 border border-white/10 cursor-pointer disabled:cursor-not-allowed`}
+          >
+            <RefreshCw className={`w-4 h-4 ${isSyncing ? "animate-spin text-zinc-500" : ""}`} />
+            {isSyncing ? "Syncing..." : "Sync from Google Doc"}
+          </button>
+          
+          {syncStatus && (
+            <div className="text-[10px] font-bold text-[#cbff00] text-center uppercase tracking-widest animate-pulse max-w-[240px] truncate self-center">
+              {syncStatus}
+            </div>
+          )}
         </div>
       </div>
 
@@ -61,10 +111,10 @@ export default function NotebookDirectory() {
               : "bg-black hover:bg-zinc-900 border border-white/10 text-zinc-400 hover:text-white"
           }`}
         >
-          All Units ({BUILT_NOTEBOOKS.length})
+          All Units ({notebooks.length})
         </button>
         {[1, 2, 3, 4].map((unitNum) => {
-          const count = BUILT_NOTEBOOKS.filter(n => n.unit === unitNum).length;
+          const count = notebooks.filter(n => n.unit === unitNum).length;
           return (
             <button
               key={unitNum}
