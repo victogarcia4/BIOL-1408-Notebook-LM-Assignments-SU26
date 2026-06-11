@@ -32,7 +32,7 @@ export default function App() {
               </span>
             </div>
             <h1 className="text-4xl sm:text-5xl md:text-7xl font-black tracking-tighter leading-none italic uppercase text-white">
-              NotebookLM Assignments
+              Notebook LM Assignments
             </h1>
             <p className="text-zinc-400 text-sm sm:text-base font-light max-w-2xl leading-relaxed">
               Curated multimedia dashboard mapping biological learning outcomes with Google's collaborative notebooks, podcasts, and study tools.
