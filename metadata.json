@@ -1,0 +1,6 @@
+{
+  "name": "BIOL 1408 NotebookLM Assignments",
+  "description": "Dynamic dashboard and tracker for BIOL 1408 NotebookLM assignments, curated by Dr. Víctor García Martínez.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

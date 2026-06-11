@@ -1,0 +1,52 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Outfit", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Cormorant Garamond", Georgia, serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+}
+
+@layer utilities {
+  .brand-text {
+    color: #cbff00;
+  }
+  .brand-bg {
+    background-color: #cbff00;
+  }
+  .brand-border {
+    border-color: #cbff00;
+  }
+  .glow-editorial {
+    box-shadow: 0 0 35px rgba(203, 255, 0, 0.08);
+  }
+}
+
+body {
+  background-color: #0d0d0d;
+}
+
+/* Soft scrollbar for high-end feel */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0d0d0d;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #222222;
+  border-radius: 99px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #cbff00;
+}
+
+/* Smooth selection colors */
+::selection {
+  background: rgba(203, 255, 0, 0.25);
+  color: #ffffff;
+}
