@@ -1,5 +1,29 @@
 [
   {
+    "objective": "Describe the levels of organization among living things.",
+    "url": "https://notebooklm.google.com/notebook/a20ec6f9-b7e5-486c-a6b1-dc5d8410fd48?pli=1",
+    "unit": 1,
+    "authors": [
+      "Jai'lah Rolland"
+    ]
+  },
+  {
+    "objective": "Identify the shared characteristics of the natural sciences.",
+    "url": "https://notebooklm.google.com/notebook/ea1f8d98-6dfe-400a-a19b-7c94c8e49a32?authuser=1",
+    "unit": 1,
+    "authors": [
+      "Alejandra Crispin"
+    ]
+  },
+  {
+    "objective": "Explain why water is an excellent solvent.",
+    "url": "https://notebooklm.google.com/notebook/ef31ecb1-d2ed-4738-bb77-a07888835bd8",
+    "unit": 1,
+    "authors": [
+      "Laura Williams"
+    ]
+  },
+  {
     "objective": "Describe nucleic acid structure and define the two types of nucleic acids.",
     "url": "https://notebooklm.google.com/notebook/3421f8d7-a882-4b28-8d59-b08e94c735e5",
     "unit": 1,
@@ -13,14 +37,6 @@
     "unit": 1,
     "authors": [
       "Mary Jane Kononen"
-    ]
-  },
-  {
-    "objective": "Identify the shared characteristics of the natural sciences.",
-    "url": "https://notebooklm.google.com/notebook/ea1f8d98-6dfe-400a-a19b-7c94c8e49a32?authuser=1",
-    "unit": 1,
-    "authors": [
-      "Alejandra Crispin"
     ]
   },
   {
@@ -40,19 +56,19 @@
     ]
   },
   {
-    "objective": "Define the quiescent G0 phase.",
-    "url": "https://notebooklm.google.com/notebook/8aef0eee-97fe-45b3-98bc-29aa56255933?authuser=1",
-    "unit": 2,
-    "authors": [
-      "Mary Jane Kononen"
-    ]
-  },
-  {
     "objective": "Explain why metabolic pathways are not closed systems.",
     "url": "https://notebooklm.google.com/notebook/257f410b-6611-4ebe-a80a-8a8356e48df2?authuser=2",
     "unit": 2,
     "authors": [
       "Mikayla Vance"
+    ]
+  },
+  {
+    "objective": "Define the quiescent G0 phase.",
+    "url": "https://notebooklm.google.com/notebook/8aef0eee-97fe-45b3-98bc-29aa56255933?authuser=1",
+    "unit": 2,
+    "authors": [
+      "Mary Jane Kononen"
     ]
   },
   {

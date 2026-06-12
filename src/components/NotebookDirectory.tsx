@@ -38,16 +38,31 @@ export default function NotebookDirectory() {
     }
   };
 
-  const filteredNotebooks = selectedUnit === "all" 
-    ? notebooks 
-    : notebooks.filter((nb) => nb.unit === selectedUnit);
-
   // Helper to resolve corresponding Chapter for an objective in the raw data
   const getChapterForObjective = (objective: string): number => {
-    const normObj = objective.toLowerCase().trim().replace(/\.$/, "");
-    const match = RAW_ASSIGNMENTS.find(a => a.objective.toLowerCase().trim().replace(/\.$/, "") === normObj);
-    return match ? match.chapter : 1;
+    const normObj = objective.toLowerCase().trim().replace(/[\s\.\?,\!]+/g, " ").replace(/\.$/, "");
+    const match = RAW_ASSIGNMENTS.find(a => {
+      const aNorm = a.objective.toLowerCase().trim().replace(/[\s\.\?,\!]+/g, " ").replace(/\.$/, "");
+      return aNorm === normObj || aNorm.includes(normObj) || normObj.includes(aNorm);
+    });
+    return match ? match.chapter : 999;
   };
+
+  const sortedNotebooks = [...notebooks].sort((a, b) => {
+    if (a.unit !== b.unit) {
+      return a.unit - b.unit;
+    }
+    const chA = getChapterForObjective(a.objective);
+    const chB = getChapterForObjective(b.objective);
+    if (chA !== chB) {
+      return chA - chB;
+    }
+    return a.objective.localeCompare(b.objective);
+  });
+
+  const filteredNotebooks = selectedUnit === "all" 
+    ? sortedNotebooks 
+    : sortedNotebooks.filter((nb) => nb.unit === selectedUnit);
 
   return (
     <div className="space-y-6">
@@ -153,7 +168,7 @@ export default function NotebookDirectory() {
                       Unit {nb.unit}
                     </span>
                     <span className="text-[10px] uppercase font-bold tracking-widest font-mono p-1 px-2.5 bg-[#cbff00]/10 text-[#cbff00] rounded-none">
-                      Chapter {ch}
+                      Chapter {ch === 999 ? "TBD" : ch}
                     </span>
                   </div>
 

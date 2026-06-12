@@ -89,6 +89,29 @@ async function startServer() {
         }
       }
 
+      // Helper to match chapter for sorting
+      const getChapterForObjective = (objective: string): number => {
+        const normObj = objective.toLowerCase().trim().replace(/[\s\.\?,\!]+/g, " ").replace(/\.$/, "");
+        const match = RAW_ASSIGNMENTS.find(a => {
+          const aNorm = a.objective.toLowerCase().trim().replace(/[\s\.\?,\!]+/g, " ").replace(/\.$/, "");
+          return aNorm === normObj || aNorm.includes(normObj) || normObj.includes(aNorm);
+        });
+        return match ? match.chapter : 999;
+      };
+
+      // Sort notebooks: 1) Unit ascending, 2) Chapter ascending, 3) Objective text ascending
+      parsedNotebooks.sort((a, b) => {
+        if (a.unit !== b.unit) {
+          return a.unit - b.unit;
+        }
+        const chA = getChapterForObjective(a.objective);
+        const chB = getChapterForObjective(b.objective);
+        if (chA !== chB) {
+          return chA - chB;
+        }
+        return a.objective.localeCompare(b.objective);
+      });
+
       console.log(`Persisting refreshed notebooks into src/data/notebooks.json...`);
       const outPath = path.join(process.cwd(), "src", "data", "notebooks.json");
       fs.writeFileSync(outPath, JSON.stringify(parsedNotebooks, null, 2), "utf-8");
