@@ -22,8 +22,36 @@
   }
 }
 
+:root {
+  /* Theme variables - Dark mode is default */
+  --page-bg: #0d0d0d;
+  --card-bg: #121212;
+  --nested-bg: #000000;
+  --text-main: #ffffff;
+  --text-muted: #a1a1aa; /* zinc-400 */
+  --text-dim: #71717a; /* zinc-500 */
+  --border-primary: rgba(255, 255, 255, 0.1);
+  --border-secondary: rgba(255, 255, 255, 0.05);
+  color-scheme: dark;
+}
+
+:root.light {
+  /* High contrast readable light mode */
+  --page-bg: #f9fafb; /* gray-50 off-white canvas */
+  --card-bg: #ffffff; /* pure white panel background */
+  --nested-bg: #f3f4f6; /* gray-100 dark contrast container */
+  --text-main: #09090b; /* zinc-950 deep solid charcoal */
+  --text-muted: #27272a; /* zinc-800 highly legible body text */
+  --text-dim: #52525b; /* zinc-600 clear crisp labels */
+  --border-primary: rgba(9, 9, 11, 0.15); /* distinct borders for boxes */
+  --border-secondary: rgba(9, 9, 11, 0.08);
+  color-scheme: light;
+}
+
 body {
-  background-color: #0d0d0d;
+  background-color: var(--page-bg);
+  color: var(--text-main);
+  transition: background-color 0.15s ease, color 0.15s ease;
 }
 
 /* Soft scrollbar for high-end feel */
@@ -33,11 +61,11 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: #0d0d0d;
+  background: var(--page-bg);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #222222;
+  background: var(--text-dim);
   border-radius: 99px;
 }
 
@@ -49,4 +77,172 @@ body {
 ::selection {
   background: rgba(203, 255, 0, 0.25);
   color: #ffffff;
+}
+
+:root.light ::selection {
+  background: rgba(21, 94, 117, 0.25);
+  color: #155e75;
+}
+
+/* THEMATIC CSS OVERRIDES FOR HIGH-CONTRAST LIGHT MODE */
+:root.light ::-webkit-scrollbar-thumb:hover {
+  background: #155e75;
+}
+
+:root.light .bg-\[\#0d0d0d\] {
+  background-color: var(--page-bg) !important;
+}
+
+:root.light .bg-\[\#121212\] {
+  background-color: var(--card-bg) !important;
+}
+
+:root.light .bg-black {
+  background-color: var(--nested-bg) !important;
+}
+
+:root.light .bg-black\/60 {
+  background-color: rgba(9, 9, 11, 0.04) !important;
+}
+
+:root.light .bg-\[\#161616\] {
+  background-color: var(--nested-bg) !important;
+}
+
+:root.light .text-white {
+  color: var(--text-main) !important;
+}
+
+:root.light .text-zinc-200 {
+  color: var(--text-muted) !important;
+}
+
+:root.light .text-zinc-250 {
+  color: var(--text-muted) !important;
+}
+
+:root.light .text-zinc-300 {
+  color: var(--text-muted) !important;
+}
+
+:root.light .text-zinc-350 {
+  color: var(--text-muted) !important;
+}
+
+:root.light .text-zinc-400 {
+  color: var(--text-muted) !important;
+}
+
+:root.light .text-\[\#cbff00\] {
+  color: #155e75 !important; /* Premium Cyan-800 contrast (ratio > 6:1) on white */
+  font-weight: 700;
+}
+
+:root.light .text-zinc-500 {
+  color: var(--text-dim) !important;
+}
+
+:root.light .border-white\/10 {
+  border-color: var(--border-primary) !important;
+}
+
+:root.light .border-white\/15 {
+  border-color: var(--border-primary) !important;
+}
+
+:root.light .border-white\/5 {
+  border-color: var(--border-secondary) !important;
+}
+
+:root.light .border-white\/20 {
+  border-color: var(--border-primary) !important;
+}
+
+:root.light .hover\:border-white\/10:hover {
+  border-color: var(--border-primary) !important;
+}
+
+:root.light .hover\:border-white\/20:hover {
+  border-color: var(--border-primary) !important;
+}
+
+:root.light .hover\:border-white\/15:hover {
+  border-color: var(--border-primary) !important;
+}
+
+:root.light .hover\:bg-white\/5:hover {
+  background-color: rgba(9, 9, 11, 0.05) !important;
+}
+
+:root.light .hover\:bg-white\/\[0\.02\]:hover {
+  background-color: rgba(9, 9, 11, 0.03) !important;
+}
+
+:root.light .hover\:bg-zinc-900:hover {
+  background-color: rgba(9, 9, 11, 0.08) !important;
+}
+
+:root.light .bg-white {
+  background-color: #0c4a6e !important; /* Dark solid brand button in light mode (sky-900 contrast) */
+  color: #ffffff !important;
+}
+
+:root.light .hover\:bg-\[\#cbff00\]:hover {
+  background-color: #0e7490 !important; /* Cyan-700 hover */
+  color: #ffffff !important;
+}
+
+:root.light .disabled\:bg-zinc-800:disabled {
+  background-color: #e4e4e7 !important;
+  color: #a1a1aa !important;
+}
+
+:root.light .bg-\[\#cbff00\] {
+  background-color: #155e75 !important; /* Cyber-cyan active buttons & capsules (Cyan-800) */
+  color: #ffffff !important;
+}
+
+:root.light .text-black {
+  color: #ffffff !important; /* High contrast text inside active cyan capsules */
+}
+
+:root.light .accent-\[\#cbff00\] {
+  accent-color: #155e75 !important;
+}
+
+:root.light .bg-black\/40 {
+  background-color: rgba(9, 9, 11, 0.05) !important;
+}
+
+:root.light circle[stroke="#1d1d1f"] {
+  stroke: #e4e4e7 !important;
+}
+
+:root.light circle[stroke="#cbff00"] {
+  stroke: #155e75 !important;
+}
+
+:root.light .bg-\[\#cbff00\]\/5 {
+  background-color: rgba(21, 94, 117, 0.06) !important;
+}
+
+:root.light .bg-\[\#cbff00\]\/10 {
+  background-color: rgba(21, 94, 117, 0.12) !important;
+}
+
+:root.light .border-\[\#cbff00\]\/20 {
+  border-color: rgba(21, 94, 117, 0.25) !important;
+}
+
+:root.light .border-\[\#cbff00\]\/25 {
+  border-color: rgba(21, 94, 117, 0.35) !important;
+}
+
+:root.light .bg-\[\#cbff00\]\/\[0\.015\] {
+  background-color: rgba(21, 94, 117, 0.02) !important;
+}
+
+:root.light select, :root.light select option {
+  background-color: #ffffff !important;
+  color: #0d0d0d !important;
 }

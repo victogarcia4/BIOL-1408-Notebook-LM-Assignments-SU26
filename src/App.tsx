@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { BookOpen, TableProperties, Sparkles, UserCheck, Heart, GraduationCap } from "lucide-react";
+import { useState, useEffect } from "react";
+import { BookOpen, TableProperties, Sparkles, UserCheck, Heart, GraduationCap, Sun, Moon } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 
 import InstructorCorner from "./components/InstructorCorner";
@@ -10,6 +10,32 @@ import CreatorGuide from "./components/CreatorGuide";
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<string>("checklist");
+  const [theme, setTheme] = useState<"light" | "dark" | "">("");
+
+  useEffect(() => {
+    // Initial load: prefer system preference or saved theme
+    const stored = localStorage.getItem("biol1408::theme") as "light" | "dark" | null;
+    if (stored) {
+      setTheme(stored);
+    } else {
+      setTheme("dark");
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!theme) return;
+    const root = window.document.documentElement;
+    if (theme === "light") {
+      root.classList.add("light");
+      root.classList.remove("dark");
+      root.style.backgroundColor = "#f9fafb";
+    } else {
+      root.classList.add("dark");
+      root.classList.remove("light");
+      root.style.backgroundColor = "#0d0d0d";
+    }
+    localStorage.setItem("biol1408::theme", theme);
+  }, [theme]);
 
   return (
     <div className="min-h-screen bg-[#0d0d0d] text-white selection:bg-[#cbff00]/30 selection:text-white font-sans antialiased pb-16">
@@ -31,7 +57,7 @@ export default function App() {
                 Summer 6W1
               </span>
             </div>
-            <h1 className="text-4xl sm:text-5xl md:text-7xl font-black tracking-tighter leading-none italic uppercase text-white">
+            <h1 className="text-4xl sm:text-5xl md:text-7xl font-black tracking-tighter leading-none italic uppercase text-white animate-fade-in">
               Notebook LM Assignments
             </h1>
             <p className="text-zinc-400 text-sm sm:text-base font-light max-w-2xl leading-relaxed">
@@ -39,6 +65,25 @@ export default function App() {
             </p>
           </div>
 
+          {/* Theme switcher control in theme matches */}
+          <button
+            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+            className="px-4 py-2.5 bg-[#121212] hover:bg-black border border-white/10 hover:border-[#cbff00]/30 text-xs font-bold uppercase tracking-widest text-[#cbff00] hover:text-[#cbff00] flex items-center gap-2 transition duration-150 focus:outline-none shrink-0 self-start md:self-end cursor-pointer"
+            id="theme-toggler"
+            title="Toggle color mode"
+          >
+            {theme === "light" ? (
+              <>
+                <Moon className="w-4 h-4 stroke-[2.5]" />
+                <span>Go Dark</span>
+              </>
+            ) : (
+              <>
+                <Sun className="w-4 h-4 stroke-[2.5]" />
+                <span>Go Light</span>
+              </>
+            )}
+          </button>
         </header>
 
         {/* Premium Dark Nav Bar resembling modern editorial styling */}
