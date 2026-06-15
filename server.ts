@@ -9,6 +9,20 @@ async function startServer() {
   const PORT = 3000;
 
   app.use(express.json());
+  
+  // API Route to fetch active notebooks dynamically
+  app.get("/api/notebooks", (req, res) => {
+    try {
+      const filePath = path.join(process.cwd(), "src", "data", "notebooks.json");
+      if (fs.existsSync(filePath)) {
+        const text = fs.readFileSync(filePath, "utf-8");
+        return res.json(JSON.parse(text));
+      }
+      res.json([]);
+    } catch (error: any) {
+      res.status(500).json({ error: error.message });
+    }
+  });
 
   // API Route to sync notebooks from Google Docs URL
   app.post("/api/sync-notebooks", async (req, res) => {

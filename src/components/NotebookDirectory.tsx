@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { BUILT_NOTEBOOKS, RAW_ASSIGNMENTS } from "../data/students";
 import { NotebookLM } from "../types";
 import { ExternalLink, Star, Compass, Music, RefreshCw, Trophy, BookOpen, Layers } from "lucide-react";
@@ -9,6 +9,24 @@ export default function NotebookDirectory() {
   const [selectedUnit, setSelectedUnit] = useState<number | "all">("all");
   const [isSyncing, setIsSyncing] = useState(false);
   const [syncStatus, setSyncStatus] = useState<string | null>(null);
+
+  useEffect(() => {
+    // Dynamic fetch of synchronized notebooks on mount
+    const fetchNotebooks = async () => {
+      try {
+        const response = await fetch("/api/notebooks");
+        if (response.ok) {
+          const data = await response.json();
+          if (Array.isArray(data) && data.length > 0) {
+            setNotebooks(data);
+          }
+        }
+      } catch (err) {
+        console.error("Failed to load live notebooks:", err);
+      }
+    };
+    fetchNotebooks();
+  }, []);
 
   const handleSync = async () => {
     setIsSyncing(true);
