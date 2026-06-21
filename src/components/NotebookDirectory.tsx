@@ -37,20 +37,24 @@ export default function NotebookDirectory() {
         headers: { "Content-Type": "application/json" }
       });
       if (!response.ok) {
-        throw new Error(`Sync failed with status: ${response.status}`);
+        throw new Error(`Status ${response.status}`);
       }
       const result = await response.json();
       if (result.success && result.notebooks) {
         setNotebooks(result.notebooks);
         setSyncStatus(`Sync Success: Loaded ${result.notebooks.length} notebooks.`);
-        // Reset status message after a few seconds
         setTimeout(() => setSyncStatus(null), 5000);
       } else {
         setSyncStatus(`Sync Error: ${result.error || "Could not parse Doc"}`);
       }
     } catch (err: any) {
       console.error("Fetch sync failed:", err);
-      setSyncStatus(`Connection Failed: ${err.message}`);
+      const isVercelHost = typeof window !== "undefined" && window.location.hostname.includes("vercel.app");
+      if (isVercelHost) {
+        setSyncStatus("Sync is only supported in AI Studio. Sync there & push to GitHub.");
+      } else {
+        setSyncStatus(`Sync Failed: ${err.message}`);
+      }
     } finally {
       setIsSyncing(false);
     }
@@ -126,7 +130,7 @@ export default function NotebookDirectory() {
           </button>
           
           {syncStatus && (
-            <div className="text-[10px] font-bold text-[#cbff00] text-center uppercase tracking-widest animate-pulse max-w-[240px] truncate self-center">
+            <div className="text-[10px] sm:text-xs font-bold text-[#cbff00] text-center uppercase tracking-widest animate-pulse max-w-sm self-center whitespace-normal leading-relaxed">
               {syncStatus}
             </div>
           )}
