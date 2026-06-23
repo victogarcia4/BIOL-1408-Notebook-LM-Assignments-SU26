@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <radialGradient id="bgGrad" cx="50%" cy="50%" r="50%" fx="30%" fy="30%">
+      <stop offset="0%" stop-color="#cbeeff" />
+      <stop offset="100%" stop-color="#90d5ff" />
+    </radialGradient>
+    <!-- Outer Border Shadow/Glow -->
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#0066cc" flood-opacity="0.15" />
+    </filter>
+  </defs>
+
+  <!-- Outer Ring (Medium Blue) -->
+  <circle cx="256" cy="256" r="240" fill="url(#bgGrad)" stroke="#1a8cff" stroke-width="24" filter="url(#shadow)" />
+  
+  <!-- Subtle Inner Ring Reflection -->
+  <circle cx="256" cy="256" r="224" fill="none" stroke="#ffffff" stroke-width="6" opacity="0.6" />
+
+  <!-- The Bold 'N' with White Outline -->
+  <g>
+    <!-- White Outline (Thicker Stroke) -->
+    <path d="M 180,355 L 180,157 L 332,355 L 332,157" 
+          fill="none" 
+          stroke="#ffffff" 
+          stroke-width="88" 
+          stroke-linecap="round" 
+          stroke-linejoin="round" />
+    <!-- Inner Blue Letter N -->
+    <path d="M 180,355 L 180,157 L 332,355 L 332,157" 
+          fill="none" 
+          stroke="#1070e0" 
+          stroke-width="54" 
+          stroke-linecap="round" 
+          stroke-linejoin="round" />
+  </g>
+</svg>

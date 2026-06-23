@@ -13,6 +13,75 @@ export default function App() {
   const [theme, setTheme] = useState<"light" | "dark" | "">("");
 
   useEffect(() => {
+    // Set document title to Notebook LM as requested
+    document.title = "Notebook LM";
+
+    // Generate high-resolution PNG favicon dynamically using Canvas
+    try {
+      const canvas = document.createElement("canvas");
+      canvas.width = 192;
+      canvas.height = 192;
+      const ctx = canvas.getContext("2d");
+      if (ctx) {
+        ctx.imageSmoothingEnabled = true;
+        ctx.imageSmoothingQuality = "high";
+
+        // 1. Draw light blue circular background gradient
+        const grad = ctx.createRadialGradient(96, 96, 0, 96, 96, 96);
+        grad.addColorStop(0, "#cbeeff");
+        grad.addColorStop(1, "#90d5ff");
+        
+        ctx.beginPath();
+        ctx.arc(96, 96, 90, 0, 2 * Math.PI);
+        ctx.fillStyle = grad;
+        ctx.fill();
+
+        // 2. Draw medium blue outer border
+        ctx.lineWidth = 10;
+        ctx.strokeStyle = "#1a8cff";
+        ctx.stroke();
+
+        // 3. Draw a subtle inner white shine ring
+        ctx.beginPath();
+        ctx.arc(96, 96, 84, 0, 2 * Math.PI);
+        ctx.lineWidth = 2.5;
+        ctx.strokeStyle = "rgba(255, 255, 255, 0.7)";
+        ctx.stroke();
+
+        // 4. Draw bold letter 'N' with thick white outline
+        ctx.font = 'bold 110px "Inter", "Space Grotesk", sans-serif';
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        
+        // White border stroke first
+        ctx.lineWidth = 20;
+        ctx.strokeStyle = "#ffffff";
+        ctx.lineJoin = "round";
+        ctx.strokeText("N", 96, 96);
+
+        // Solid blue fill text
+        ctx.fillStyle = "#1070e0";
+        ctx.fillText("N", 96, 96);
+
+        // 5. Apply favicon to the head dynamically
+        const dataUrl = canvas.toDataURL("image/png");
+        
+        // Update regular icon and shortcut icon links
+        ["icon", "shortcut icon"].forEach(rel => {
+          let link = document.querySelector(`link[rel~='${rel}']`) as HTMLLinkElement;
+          if (!link) {
+            link = document.createElement("link");
+            link.rel = rel;
+            document.head.appendChild(link);
+          }
+          link.type = "image/png";
+          link.href = dataUrl;
+        });
+      }
+    } catch (err) {
+      console.error("Failed to generate dynamic favicon:", err);
+    }
+
     // Initial load: prefer system preference or saved theme
     const stored = localStorage.getItem("biol1408::theme") as "light" | "dark" | null;
     if (stored) {
@@ -57,9 +126,28 @@ export default function App() {
                 Summer 6W1
               </span>
             </div>
-            <h1 className="text-4xl sm:text-5xl md:text-7xl font-black tracking-tighter leading-none italic uppercase text-white animate-fade-in">
-              Notebook LM Assignments
-            </h1>
+            <div className="flex flex-col sm:flex-row sm:items-center gap-4 pt-1">
+              {/* Branded Notebook LM Logo */}
+              <div className="w-12 h-12 rounded-full bg-[#cbeeff] flex items-center justify-center border-2 border-[#1a8cff] shadow-[0_0_15px_rgba(26,140,255,0.25)] shrink-0 select-none">
+                <svg viewBox="0 0 512 512" className="w-7 h-7">
+                  <path d="M 180,355 L 180,157 L 332,355 L 332,157" 
+                        fill="none" 
+                        stroke="#ffffff" 
+                        strokeWidth="80" 
+                        strokeLinecap="round" 
+                        strokeLinejoin="round" />
+                  <path d="M 180,355 L 180,157 L 332,355 L 332,157" 
+                        fill="none" 
+                        stroke="#1070e0" 
+                        strokeWidth="50" 
+                        strokeLinecap="round" 
+                        strokeLinejoin="round" />
+                </svg>
+              </div>
+              <h1 className="text-4xl sm:text-5xl md:text-7xl font-black tracking-tighter leading-none italic uppercase text-white">
+                Notebook LM Assignments
+              </h1>
+            </div>
             <p className="text-zinc-400 text-sm sm:text-base font-light max-w-2xl leading-relaxed">
               Curated multimedia dashboard mapping biological learning outcomes with Google's collaborative notebooks, podcasts, and study tools.
             </p>
