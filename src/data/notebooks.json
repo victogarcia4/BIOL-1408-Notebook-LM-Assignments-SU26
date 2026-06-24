@@ -136,9 +136,25 @@
     ]
   },
   {
+    "objective": "Describe the structure of eukaryotic cells.",
+    "url": "https://notebooklm.google.com/notebook/3d70ed90-2a3e-4faf-95b8-ede6242352c3",
+    "unit": 1,
+    "authors": [
+      "Keundria Harbin"
+    ]
+  },
+  {
     "objective": "State the role of the plasma membrane.",
     "url": "https://notebooklm.google.com/notebook/f68a5261-fe92-47e5-a983-3b5233fe6838",
     "unit": 1,
+    "authors": [
+      "Maqueila Garcia"
+    ]
+  },
+  {
+    "objective": "Describe endocytosis, including phagocytosis, pinocytosis, and receptor-mediated endocytosis.",
+    "url": "https://notebooklm.google.com/notebook/f9c6f911-6760-4ab3-ac9c-5e23cdf64866",
+    "unit": 2,
     "authors": [
       "Maqueila Garcia"
     ]
@@ -216,6 +232,22 @@
     ]
   },
   {
+    "objective": "Describe how tumor suppressors function.",
+    "url": "https://notebooklm.google.com/notebook/4d6bef62-2b1b-408f-b957-78e082fc99e6?authuser=1",
+    "unit": 2,
+    "authors": [
+      "Allyssa Angelo"
+    ]
+  },
+  {
+    "objective": "Describe the three stages of interphase.",
+    "url": "https://notebooklm.google.com/notebook/e3b13dd3-f0f5-42d1-b435-e426dad2d4ae",
+    "unit": 2,
+    "authors": [
+      "Keundria Harbin"
+    ]
+  },
+  {
     "objective": "Explain how cytoplasmic content is divided during cytokinesis.",
     "url": "https://notebooklm.google.com/notebook/0947eba8-9e58-426b-8d8d-f5db76b8ce8c",
     "unit": 2,
@@ -237,6 +269,22 @@
     "unit": 2,
     "authors": [
       "Aya Anodjo Epse Kone"
+    ]
+  },
+  {
+    "objective": "Understand internal and external cell cycle controls.",
+    "url": "https://notebooklm.google.com/notebook/ca146672-0ccb-477c-af2c-c5914f46f362",
+    "unit": 2,
+    "authors": [
+      "Alexa Hernandez"
+    ]
+  },
+  {
+    "objective": "Describe chromosome behavior during meiosis and differences between the first and second meiotic divisions.",
+    "url": "https://notebooklm.google.com/notebook/fda0ffe7-6f92-4a0b-849c-e4a1ffa3baf4?authuser=1",
+    "unit": 3,
+    "authors": [
+      "Allyssa Angelo"
     ]
   },
   {
@@ -277,6 +325,15 @@
     "unit": 4,
     "authors": [
       "Jennifer Sanchez Ortega"
+    ]
+  },
+  {
+    "objective": "Describe how changes to gene expression can cause cancer.",
+    "url": "https://notebooklm.google.com/notebook/00f77f16-c1cc-45a5-8ecc-c7dc82356f9e?authuser=1",
+    "unit": 4,
+    "authors": [
+      "Allyssa Angelo",
+      "Nadia Chavarria"
     ]
   },
   {
