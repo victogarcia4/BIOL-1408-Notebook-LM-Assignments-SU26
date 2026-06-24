@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <!-- Definitions for Gradients -->
+  <defs>
+    <!-- Background Gradient (Slate Grey to Dark Charcoal) -->
+    <radialGradient id="bgGrad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#4e525a" />
+      <stop offset="100%" stop-color="#212328" />
+    </radialGradient>
+    
+    <!-- Skin Tone Gradient (Tan/Olive) -->
+    <linearGradient id="skinGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#e2aa85" />
+      <stop offset="100%" stop-color="#c88b64" />
+    </linearGradient>
+
+    <!-- Dark Navy Blazer Gradient -->
+    <linearGradient id="blazerGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#18233c" />
+      <stop offset="100%" stop-color="#0b101c" />
+    </linearGradient>
+
+    <!-- Light Blue Shirt Gradient -->
+    <linearGradient id="shirtGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#cfe0fc" />
+      <stop offset="100%" stop-color="#a8c5fa" />
+    </linearGradient>
+  </defs>
+
+  <!-- Circular Background -->
+  <circle cx="256" cy="256" r="240" fill="url(#bgGrad)" stroke="#2f3238" stroke-width="8" />
+
+  <!-- The Body & Clothes -->
+  <g id="clothing">
+    <!-- Light Blue Shirt chest area -->
+    <path d="M 210,410 Q 256,460 302,410 L 302,512 L 210,512 Z" fill="url(#shirtGrad)" />
+    
+    <!-- Collar details (Left and Right collar folds) -->
+    <path d="M 205,408 L 242,465 L 253,425 Z" fill="#b9d3fc" stroke="#8cb5fc" stroke-width="2" />
+    <path d="M 307,408 L 270,465 L 259,425 Z" fill="#b9d3fc" stroke="#8cb5fc" stroke-width="2" />
+
+    <!-- Dark Navy Blazer (Shoulders and outer suit jacket) -->
+    <!-- Left Shoulder -->
+    <path d="M 70,512 C 70,430 160,390 220,420 L 205,512 Z" fill="url(#blazerGrad)" />
+    <!-- Right Shoulder -->
+    <path d="M 442,512 C 442,430 352,390 292,420 L 307,512 Z" fill="url(#blazerGrad)" />
+    
+    <!-- Blazer lapels -->
+    <path d="M 200,425 L 230,512 L 140,512 Z" fill="#202c44" />
+    <path d="M 312,425 L 282,512 L 372,512 Z" fill="#202c44" />
+  </g>
+
+  <!-- The Head & Neck -->
+  <g id="head_neck">
+    <!-- Neck -->
+    <path d="M 220,350 Q 256,430 292,350 L 285,415 Q 256,425 227,415 Z" fill="#b8835e" />
+
+    <!-- Head Shape (Bald head with realistic slightly narrow top) -->
+    <path d="M 170,240 C 170,130 210,105 256,105 C 302,105 342,130 342,240 C 342,320 310,350 256,350 C 202,350 170,320 170,240 Z" fill="url(#skinGrad)" />
+
+    <!-- Ears -->
+    <!-- Left Ear -->
+    <path d="M 170,220 C 153,220 148,255 170,260 Z" fill="#c88b64" />
+    <path d="M 170,230 C 160,232 160,248 170,250 Z" fill="#b8835e" />
+    <!-- Right Ear -->
+    <path d="M 342,220 C 359,220 364,255 342,260 Z" fill="#c88b64" />
+    <path d="M 342,230 C 352,232 352,248 342,250 Z" fill="#b8835e" />
+
+    <!-- Face Features -->
+    <!-- Eyebrows (Dark, expressive, shaped to friendly look) -->
+    <path d="M 198,205 Q 218,188 238,198" fill="none" stroke="#2a1d17" stroke-width="4.5" stroke-linecap="round" />
+    <path d="M 314,205 Q 294,188 274,198" fill="none" stroke="#2a1d17" stroke-width="4.5" stroke-linecap="round" />
+
+    <!-- Eyes (Warm brown, smiling/friendly crinkle) -->
+    <ellipse cx="218" cy="220" rx="11" ry="7" fill="#ffffff" />
+    <circle cx="218" cy="220" r="5.5" fill="#462916" />
+    <circle cx="221" cy="217" r="2.2" fill="#ffffff" /> <!-- highlight -->
+    <!-- Smiling eye upper line -->
+    <path d="M 205,217 Q 218,209 231,217" fill="none" stroke="#2a1d17" stroke-width="3" stroke-linecap="round" />
+
+    <ellipse cx="294" cy="220" rx="11" ry="7" fill="#ffffff" />
+    <circle cx="294" cy="220" r="5.5" fill="#462916" />
+    <circle cx="297" cy="217" r="2.2" fill="#ffffff" /> <!-- highlight -->
+    <path d="M 281,217 Q 294,209 307,217" fill="none" stroke="#2a1d17" stroke-width="3" stroke-linecap="round" />
+
+    <!-- Nose (Proportional, shaded and styled) -->
+    <path d="M 256,220 L 256,258 Q 256,268 248,268 M 256,268 Q 264,268 264,263" fill="none" stroke="#b0734d" stroke-width="3.5" stroke-linecap="round" />
+
+    <!-- Friendly big smile with teeth -->
+    <!-- Mouth interior -->
+    <path d="M 208,282 Q 256,328 304,282 Q 256,280 208,282 Z" fill="#601515" />
+    <!-- Teeth -->
+    <path d="M 213,283 Q 256,303 299,283 Q 256,283 213,283 Z" fill="#ffffff" />
+    <!-- Lower Lip shadow -->
+    <path d="M 223,300 Q 256,326 289,300" fill="none" stroke="#b8835e" stroke-width="3" stroke-linecap="round" />
+    <!-- Smile laugh lines -->
+    <path d="M 202,277 Q 197,284 205,291" fill="none" stroke="#b0734d" stroke-width="2.5" stroke-linecap="round" />
+    <path d="M 310,277 Q 315,284 307,291" fill="none" stroke="#b0734d" stroke-width="2.5" stroke-linecap="round" />
+  </g>
+</svg>

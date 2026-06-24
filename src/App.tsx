@@ -252,9 +252,19 @@ export default function App() {
         {/* Class footer */}
         <footer className="text-center pt-8 text-xs text-zinc-500 font-mono flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-white/10">
           <p>© 2026 BIOL 1408 Summer. All study logs persist offline on this browser container.</p>
-          <p className="flex items-center gap-1">
-            Built with <Heart className="w-3.5 h-3.5 text-zinc-650 fill-zinc-650" /> by Dr. Víctor García Martínez
-          </p>
+          <div className="flex items-center gap-2">
+            <div className="w-6 h-6 rounded-full overflow-hidden border border-white/20 bg-zinc-900 shrink-0 select-none">
+              <img
+                src="/dr-victor-garcia.svg"
+                alt="Dr. Víctor García Martínez"
+                className="w-full h-full object-cover"
+                referrerPolicy="no-referrer"
+              />
+            </div>
+            <p className="flex items-center gap-1 text-zinc-400">
+              Built with <Heart className="w-3.5 h-3.5 text-red-500 fill-red-500" /> by Dr. Víctor García Martínez
+            </p>
+          </div>
         </footer>
       </div>
     </div>

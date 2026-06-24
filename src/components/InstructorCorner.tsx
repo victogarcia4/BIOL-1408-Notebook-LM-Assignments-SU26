@@ -14,9 +14,19 @@ export default function InstructorCorner() {
       {/* Background abstract overlay decorative glow */}
       <div className="absolute right-0 top-0 w-80 h-80 bg-[#cbff00]/[0.015] rounded-full blur-3xl pointer-events-none" />
 
-      <div className="relative z-10">
+      <div className="relative z-10 flex flex-col md:flex-row gap-6 md:gap-8 items-start md:items-center">
+        {/* Instructor Portrait Avatar */}
+        <div className="relative shrink-0 w-24 h-24 sm:w-32 sm:h-32 border-2 border-white/10 rounded-full overflow-hidden bg-zinc-900 shadow-[0_4px_20px_rgba(0,0,0,0.5)]">
+          <img
+            src="/dr-victor-garcia.svg"
+            alt={INSTRUCTOR_NAME}
+            className="w-full h-full object-cover"
+            referrerPolicy="no-referrer"
+          />
+        </div>
+
         {/* Instructor Description and info */}
-        <div className="text-left space-y-4">
+        <div className="text-left space-y-4 flex-1 w-full">
           <div className="space-y-2">
             <h2 className="text-3xl sm:text-4xl font-serif italic text-white tracking-tight leading-none pt-1">
               {INSTRUCTOR_NAME}
