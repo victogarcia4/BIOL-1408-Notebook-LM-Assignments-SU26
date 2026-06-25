@@ -175,7 +175,7 @@ export default function NotebookDirectory() {
             const ch = getChapterForObjective(nb.objective);
             return (
               <motion.article
-                key={nb.objective}
+                key={`${nb.objective}-${nb.url}-${idx}`}
                 layout
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
