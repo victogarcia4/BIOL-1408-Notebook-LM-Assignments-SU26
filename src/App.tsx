@@ -11,76 +11,133 @@ import CreatorGuide from "./components/CreatorGuide";
 export default function App() {
   const [activeTab, setActiveTab] = useState<string>("checklist");
   const [theme, setTheme] = useState<"light" | "dark" | "">("");
+  const [footerImg, setFooterImg] = useState<string>("/dr-victor-garcia.png");
 
   useEffect(() => {
-    // Set document title to Notebook LM as requested
-    document.title = "Notebook LM";
+    // Set document title to Dr. Victor Garcia as requested
+    document.title = "Dr. Victor Garcia";
 
-    // Generate high-resolution PNG favicon dynamically using Canvas
-    try {
-      const canvas = document.createElement("canvas");
-      canvas.width = 192;
-      canvas.height = 192;
-      const ctx = canvas.getContext("2d");
-      if (ctx) {
-        ctx.imageSmoothingEnabled = true;
-        ctx.imageSmoothingQuality = "high";
+    // Dynamic favicon loader attempting various photo formats of Dr. Víctor García
+    const imagePaths = [
+      "/dr-victor-garcia.png",
+      "/dr-victor-garcia.jpg",
+      "/dr_victor_garcia.png",
+      "/dr_victor_garcia.jpg",
+      "/dr-victor-garcia.svg"
+    ];
 
-        // 1. Draw light blue circular background gradient
-        const grad = ctx.createRadialGradient(96, 96, 0, 96, 96, 96);
-        grad.addColorStop(0, "#cbeeff");
-        grad.addColorStop(1, "#90d5ff");
-        
-        ctx.beginPath();
-        ctx.arc(96, 96, 90, 0, 2 * Math.PI);
-        ctx.fillStyle = grad;
-        ctx.fill();
+    const drawDefaultFavicon = () => {
+      try {
+        const canvas = document.createElement("canvas");
+        canvas.width = 192;
+        canvas.height = 192;
+        const ctx = canvas.getContext("2d");
+        if (ctx) {
+          ctx.imageSmoothingEnabled = true;
+          ctx.imageSmoothingQuality = "high";
 
-        // 2. Draw medium blue outer border
-        ctx.lineWidth = 10;
-        ctx.strokeStyle = "#1a8cff";
-        ctx.stroke();
+          // 1. Draw light blue circular background gradient
+          const grad = ctx.createRadialGradient(96, 96, 0, 96, 96, 96);
+          grad.addColorStop(0, "#cbeeff");
+          grad.addColorStop(1, "#90d5ff");
+          
+          ctx.beginPath();
+          ctx.arc(96, 96, 90, 0, 2 * Math.PI);
+          ctx.fillStyle = grad;
+          ctx.fill();
 
-        // 3. Draw a subtle inner white shine ring
-        ctx.beginPath();
-        ctx.arc(96, 96, 84, 0, 2 * Math.PI);
-        ctx.lineWidth = 2.5;
-        ctx.strokeStyle = "rgba(255, 255, 255, 0.7)";
-        ctx.stroke();
+          // 2. Draw medium blue outer border
+          ctx.lineWidth = 10;
+          ctx.strokeStyle = "#1a8cff";
+          ctx.stroke();
 
-        // 4. Draw bold letter 'N' with thick white outline
-        ctx.font = 'bold 110px "Inter", "Space Grotesk", sans-serif';
-        ctx.textAlign = "center";
-        ctx.textBaseline = "middle";
-        
-        // White border stroke first
-        ctx.lineWidth = 20;
-        ctx.strokeStyle = "#ffffff";
-        ctx.lineJoin = "round";
-        ctx.strokeText("N", 96, 96);
+          // 3. Draw a subtle inner white shine ring
+          ctx.beginPath();
+          ctx.arc(96, 96, 84, 0, 2 * Math.PI);
+          ctx.lineWidth = 2.5;
+          ctx.strokeStyle = "rgba(255, 255, 255, 0.7)";
+          ctx.stroke();
 
-        // Solid blue fill text
-        ctx.fillStyle = "#1070e0";
-        ctx.fillText("N", 96, 96);
+          // 4. Draw bold letter 'N' with thick white outline
+          ctx.font = 'bold 110px "Inter", "Space Grotesk", sans-serif';
+          ctx.textAlign = "center";
+          ctx.textBaseline = "middle";
+          
+          ctx.lineWidth = 20;
+          ctx.strokeStyle = "#ffffff";
+          ctx.lineJoin = "round";
+          ctx.strokeText("N", 96, 96);
 
-        // 5. Apply favicon to the head dynamically
-        const dataUrl = canvas.toDataURL("image/png");
-        
-        // Update regular icon and shortcut icon links
-        ["icon", "shortcut icon"].forEach(rel => {
-          let link = document.querySelector(`link[rel~='${rel}']`) as HTMLLinkElement;
-          if (!link) {
-            link = document.createElement("link");
-            link.rel = rel;
-            document.head.appendChild(link);
-          }
-          link.type = "image/png";
-          link.href = dataUrl;
-        });
+          ctx.fillStyle = "#1070e0";
+          ctx.fillText("N", 96, 96);
+
+          const dataUrl = canvas.toDataURL("image/png");
+          ["icon", "shortcut icon"].forEach(rel => {
+            let link = document.querySelector(`link[rel~='${rel}']`) as HTMLLinkElement;
+            if (!link) {
+              link = document.createElement("link");
+              link.rel = rel;
+              document.head.appendChild(link);
+            }
+            link.type = "image/png";
+            link.href = dataUrl;
+          });
+        }
+      } catch (err) {
+        console.error("Failed to generate default dynamic favicon:", err);
       }
-    } catch (err) {
-      console.error("Failed to generate dynamic favicon:", err);
-    }
+    };
+
+    const loadFavicon = (index: number) => {
+      if (index >= imagePaths.length) {
+        drawDefaultFavicon();
+        return;
+      }
+
+      const img = new Image();
+      img.src = imagePaths[index];
+      img.crossOrigin = "anonymous";
+      img.onload = () => {
+        try {
+          const canvas = document.createElement("canvas");
+          canvas.width = 192;
+          canvas.height = 192;
+          const ctx = canvas.getContext("2d");
+          if (ctx) {
+            ctx.imageSmoothingEnabled = true;
+            ctx.imageSmoothingQuality = "high";
+
+            // Draw a circle clip for the profile picture
+            ctx.beginPath();
+            ctx.arc(96, 96, 96, 0, 2 * Math.PI);
+            ctx.clip();
+
+            // Draw photo inside the clipped area
+            ctx.drawImage(img, 0, 0, 192, 192);
+
+            const dataUrl = canvas.toDataURL("image/png");
+            ["icon", "shortcut icon", "apple-touch-icon"].forEach(rel => {
+              let link = document.querySelector(`link[rel~='${rel}']`) as HTMLLinkElement;
+              if (!link) {
+                link = document.createElement("link");
+                link.rel = rel;
+                document.head.appendChild(link);
+              }
+              link.type = "image/png";
+              link.href = dataUrl;
+            });
+          }
+        } catch (err) {
+          console.error("Failed to render photo on favicon canvas, trying next...", err);
+          loadFavicon(index + 1);
+        }
+      };
+      img.onerror = () => {
+        loadFavicon(index + 1);
+      };
+    };
+
+    loadFavicon(0);
 
     // Initial load: prefer system preference or saved theme
     const stored = localStorage.getItem("biol1408::theme") as "light" | "dark" | null;
@@ -255,14 +312,21 @@ export default function App() {
           <div className="flex items-center gap-2">
             <div className="w-6 h-6 rounded-full overflow-hidden border border-white/20 bg-zinc-900 shrink-0 select-none">
               <img
-                src="/dr-victor-garcia.svg"
-                alt="Dr. Víctor García Martínez"
+                src={footerImg}
+                onError={() => {
+                  if (footerImg === "/dr-victor-garcia.png") {
+                    setFooterImg("/VHGM pic foto.PNG");
+                  } else if (footerImg === "/VHGM pic foto.PNG") {
+                    setFooterImg("/dr-victor-garcia.jpg");
+                  }
+                }}
+                alt="Dr. Victor Garcia"
                 className="w-full h-full object-cover"
                 referrerPolicy="no-referrer"
               />
             </div>
             <p className="flex items-center gap-1 text-zinc-400">
-              Built with <Heart className="w-3.5 h-3.5 text-red-500 fill-red-500" /> by Dr. Víctor García Martínez
+              Built with <Heart className="w-3.5 h-3.5 text-red-500 fill-red-500" /> by Dr. Victor Garcia
             </p>
           </div>
         </footer>

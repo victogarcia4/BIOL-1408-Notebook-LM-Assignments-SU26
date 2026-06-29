@@ -1,8 +1,10 @@
 import { INSTRUCTOR_NAME, INSTRUCTOR_TITLE, INSTRUCTOR_BIO } from "../data/instructor";
 import { Award, ShieldCheck, HelpCircle } from "lucide-react";
 import { motion } from "motion/react";
+import { useState } from "react";
 
 export default function InstructorCorner() {
+  const [instructorImg, setInstructorImg] = useState<string>("/dr-victor-garcia.png");
   return (
     <motion.section
       initial={{ opacity: 0, y: 15 }}
@@ -18,7 +20,14 @@ export default function InstructorCorner() {
         {/* Instructor Portrait Avatar */}
         <div className="relative shrink-0 w-24 h-24 sm:w-32 sm:h-32 border-2 border-white/10 rounded-full overflow-hidden bg-zinc-900 shadow-[0_4px_20px_rgba(0,0,0,0.5)]">
           <img
-            src="/dr-victor-garcia.svg"
+            src={instructorImg}
+            onError={() => {
+              if (instructorImg === "/dr-victor-garcia.png") {
+                setInstructorImg("/VHGM pic foto.PNG");
+              } else if (instructorImg === "/VHGM pic foto.PNG") {
+                setInstructorImg("/dr-victor-garcia.jpg");
+              }
+            }}
             alt={INSTRUCTOR_NAME}
             className="w-full h-full object-cover"
             referrerPolicy="no-referrer"
