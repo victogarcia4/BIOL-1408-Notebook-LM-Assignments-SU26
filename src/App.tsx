@@ -11,7 +11,7 @@ import CreatorGuide from "./components/CreatorGuide";
 export default function App() {
   const [activeTab, setActiveTab] = useState<string>("checklist");
   const [theme, setTheme] = useState<"light" | "dark" | "">("");
-  const [footerImg, setFooterImg] = useState<string>("/dr-victor-garcia.png");
+  const [footerImg, setFooterImg] = useState<string>("/dr-victor-garcia.png?v=2");
 
   useEffect(() => {
     // Set document title to Dr. Victor Garcia as requested
@@ -19,11 +19,12 @@ export default function App() {
 
     // Dynamic favicon loader attempting various photo formats of Dr. Víctor García
     const imagePaths = [
-      "/dr-victor-garcia.png",
-      "/dr-victor-garcia.jpg",
-      "/dr_victor_garcia.png",
-      "/dr_victor_garcia.jpg",
-      "/dr-victor-garcia.svg"
+      "/dr-victor-garcia.png?v=2",
+      "/VHGM pic foto.PNG?v=2",
+      "/dr-victor-garcia.jpg?v=2",
+      "/dr_victor_garcia.png?v=2",
+      "/dr_victor_garcia.jpg?v=2",
+      "/dr-victor-garcia.svg?v=2"
     ];
 
     const drawDefaultFavicon = () => {
@@ -314,11 +315,11 @@ export default function App() {
               <img
                 src={footerImg}
                 onError={() => {
-                  if (footerImg === "/dr-victor-garcia.png") {
-                    setFooterImg("/VHGM pic foto.PNG");
-                  } else if (footerImg === "/VHGM pic foto.PNG") {
-                    setFooterImg("/dr-victor-garcia.jpg");
-                  }
+              if (footerImg.startsWith("/dr-victor-garcia.png")) {
+                setFooterImg("/VHGM pic foto.PNG?v=2");
+              } else if (footerImg.startsWith("/VHGM pic foto.PNG")) {
+                setFooterImg("/dr-victor-garcia.jpg?v=2");
+              }
                 }}
                 alt="Dr. Victor Garcia"
                 className="w-full h-full object-cover"

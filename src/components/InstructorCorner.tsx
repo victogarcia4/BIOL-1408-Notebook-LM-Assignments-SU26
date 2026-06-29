@@ -4,7 +4,7 @@ import { motion } from "motion/react";
 import { useState } from "react";
 
 export default function InstructorCorner() {
-  const [instructorImg, setInstructorImg] = useState<string>("/dr-victor-garcia.png");
+  const [instructorImg, setInstructorImg] = useState<string>("/dr-victor-garcia.png?v=2");
   return (
     <motion.section
       initial={{ opacity: 0, y: 15 }}
@@ -22,10 +22,10 @@ export default function InstructorCorner() {
           <img
             src={instructorImg}
             onError={() => {
-              if (instructorImg === "/dr-victor-garcia.png") {
-                setInstructorImg("/VHGM pic foto.PNG");
-              } else if (instructorImg === "/VHGM pic foto.PNG") {
-                setInstructorImg("/dr-victor-garcia.jpg");
+              if (instructorImg.startsWith("/dr-victor-garcia.png")) {
+                setInstructorImg("/VHGM pic foto.PNG?v=2");
+              } else if (instructorImg.startsWith("/VHGM pic foto.PNG")) {
+                setInstructorImg("/dr-victor-garcia.jpg?v=2");
               }
             }}
             alt={INSTRUCTOR_NAME}
