@@ -7,11 +7,12 @@ import ChecklistTracker from "./components/ChecklistTracker";
 import NotebookDirectory from "./components/NotebookDirectory";
 import DistributionMatrix from "./components/DistributionMatrix";
 import CreatorGuide from "./components/CreatorGuide";
+import { INSTRUCTOR_IMAGE_BASE64 } from "./data/instructor_image";
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<string>("checklist");
   const [theme, setTheme] = useState<"light" | "dark" | "">("");
-  const [footerImg, setFooterImg] = useState<string>("/dr-victor-garcia.png?v=2");
+  const [footerImg, setFooterImg] = useState<string>(INSTRUCTOR_IMAGE_BASE64);
 
   useEffect(() => {
     // Set document title to Dr. Victor Garcia as requested
@@ -19,12 +20,10 @@ export default function App() {
 
     // Dynamic favicon loader attempting various photo formats of Dr. Víctor García
     const imagePaths = [
+      INSTRUCTOR_IMAGE_BASE64,
       "/dr-victor-garcia.png?v=2",
       "/VHGM pic foto.PNG?v=2",
-      "/dr-victor-garcia.jpg?v=2",
-      "/dr_victor_garcia.png?v=2",
-      "/dr_victor_garcia.jpg?v=2",
-      "/dr-victor-garcia.svg?v=2"
+      "/dr-victor-garcia.jpg?v=2"
     ];
 
     const drawDefaultFavicon = () => {
@@ -315,11 +314,11 @@ export default function App() {
               <img
                 src={footerImg}
                 onError={() => {
-              if (footerImg.startsWith("/dr-victor-garcia.png")) {
-                setFooterImg("/VHGM pic foto.PNG?v=2");
-              } else if (footerImg.startsWith("/VHGM pic foto.PNG")) {
-                setFooterImg("/dr-victor-garcia.jpg?v=2");
-              }
+                  if (footerImg === INSTRUCTOR_IMAGE_BASE64) {
+                    setFooterImg("/dr-victor-garcia.png?v=2");
+                  } else if (footerImg === "/dr-victor-garcia.png?v=2") {
+                    setFooterImg("/VHGM pic foto.PNG?v=2");
+                  }
                 }}
                 alt="Dr. Victor Garcia"
                 className="w-full h-full object-cover"

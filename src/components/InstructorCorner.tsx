@@ -1,10 +1,11 @@
 import { INSTRUCTOR_NAME, INSTRUCTOR_TITLE, INSTRUCTOR_BIO } from "../data/instructor";
+import { INSTRUCTOR_IMAGE_BASE64 } from "../data/instructor_image";
 import { Award, ShieldCheck, HelpCircle } from "lucide-react";
 import { motion } from "motion/react";
 import { useState } from "react";
 
 export default function InstructorCorner() {
-  const [instructorImg, setInstructorImg] = useState<string>("/dr-victor-garcia.png?v=2");
+  const [instructorImg, setInstructorImg] = useState<string>(INSTRUCTOR_IMAGE_BASE64);
   return (
     <motion.section
       initial={{ opacity: 0, y: 15 }}
@@ -22,10 +23,10 @@ export default function InstructorCorner() {
           <img
             src={instructorImg}
             onError={() => {
-              if (instructorImg.startsWith("/dr-victor-garcia.png")) {
+              if (instructorImg === INSTRUCTOR_IMAGE_BASE64) {
+                setInstructorImg("/dr-victor-garcia.png?v=2");
+              } else if (instructorImg === "/dr-victor-garcia.png?v=2") {
                 setInstructorImg("/VHGM pic foto.PNG?v=2");
-              } else if (instructorImg.startsWith("/VHGM pic foto.PNG")) {
-                setInstructorImg("/dr-victor-garcia.jpg?v=2");
               }
             }}
             alt={INSTRUCTOR_NAME}
