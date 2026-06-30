@@ -184,23 +184,6 @@ export default function App() {
               </span>
             </div>
             <div className="flex flex-col sm:flex-row sm:items-center gap-4 pt-1">
-              {/* Branded Notebook LM Logo */}
-              <div className="w-12 h-12 rounded-full bg-[#cbeeff] flex items-center justify-center border-2 border-[#1a8cff] shadow-[0_0_15px_rgba(26,140,255,0.25)] shrink-0 select-none">
-                <svg viewBox="0 0 512 512" className="w-7 h-7">
-                  <path d="M 180,355 L 180,157 L 332,355 L 332,157" 
-                        fill="none" 
-                        stroke="#ffffff" 
-                        strokeWidth="80" 
-                        strokeLinecap="round" 
-                        strokeLinejoin="round" />
-                  <path d="M 180,355 L 180,157 L 332,355 L 332,157" 
-                        fill="none" 
-                        stroke="#1070e0" 
-                        strokeWidth="50" 
-                        strokeLinecap="round" 
-                        strokeLinejoin="round" />
-                </svg>
-              </div>
               <h1 className="text-4xl sm:text-5xl md:text-7xl font-black tracking-tighter leading-none italic uppercase text-white">
                 Notebook LM Assignments
               </h1>
