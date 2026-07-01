@@ -38,43 +38,34 @@ async function startServer() {
       const text = await response.text();
       console.log(`Fetched Google Doc text. Parsing...`);
       
-      const lines = text.split("\n");
       const parsedNotebooks: any[] = [];
-      let currentUnit = 1;
-      let pendingObjective = "";
+      const unitSections = text.split(/Unit\s*(?:#)?\s*(\d+):?/i);
 
-      for (let line of lines) {
-        line = line.trim();
-        if (!line) continue;
-
-        // Extract Unit context
-        const unitMatch = line.match(/Unit\s*(?:#)?\s*(\d+)/i);
-        if (unitMatch) {
-          currentUnit = parseInt(unitMatch[1]);
-          pendingObjective = "";
-          continue;
-        }
-
-        // Extract numbered objective list items (e.g. "1. Describe nucleic acid structure...")
-        const objMatch = line.match(/^\d+\.\s*(.*)/);
-        if (objMatch) {
-          const content = objMatch[1].trim();
-          if (content.length > 2) {
-            pendingObjective = content;
-          }
-          continue;
-        }
-
-        // Extract Notebook URLs (always starting with http or https)
-        if (line.startsWith("http://") || line.startsWith("https://")) {
-          if (pendingObjective) {
+      for (let i = 1; i < unitSections.length; i += 2) {
+        const unitNum = parseInt(unitSections[i]);
+        const unitContent = unitSections[i + 1] || "";
+        
+        // Split content by looking ahead for a numbered list item (e.g., "1. Describe...")
+        const parts = unitContent.split(/(?=\b\d+\.\s+)/);
+        for (let part of parts) {
+          part = part.trim();
+          if (!part) continue;
+          
+          const numMatch = part.match(/^(\d+)\.\s+/);
+          if (!numMatch) continue;
+          
+          const urlMatch = part.match(/(https?:\/\/\S+)/);
+          if (urlMatch) {
+            const url = urlMatch[1].trim();
+            const objPart = part.substring(0, part.indexOf(urlMatch[1]));
+            const objective = objPart.replace(/^\d+\.\s*/, "").trim().replace(/[\s\.\?,\!]+$/, "");
+            
             parsedNotebooks.push({
-              objective: pendingObjective,
-              url: line,
-              unit: currentUnit,
+              objective,
+              url,
+              unit: unitNum,
               authors: []
             });
-            pendingObjective = "";
           }
         }
       }
