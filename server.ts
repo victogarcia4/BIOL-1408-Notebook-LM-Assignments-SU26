@@ -57,6 +57,13 @@ async function startServer() {
           const urlMatch = part.match(/(https?:\/\/\S+)/);
           if (urlMatch) {
             const url = urlMatch[1].trim();
+            
+            // Special rule: Remove the duplicate natural sciences notebook from Unit 3 (belongs only to Unit 1)
+            if (unitNum === 3 && url.includes("ea1f8d98")) {
+              console.log("Skipping duplicate natural sciences notebook from Unit 3");
+              continue;
+            }
+
             const objPart = part.substring(0, part.indexOf(urlMatch[1]));
             const objective = objPart.replace(/^\d+\.\s*/, "").trim().replace(/[\s\.\?,\!]+$/, "");
             
