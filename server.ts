@@ -77,10 +77,42 @@ async function startServer() {
         }
       }
 
+      // Define Extra Credit Games precisely with their correct URLs and authors as requested
+      const extraCreditGames = [
+        {
+          objective: "Chemical MatchMaker",
+          url: "https://ai.studio/apps/9a7a8ba0-b730-4dd0-90ce-8f03496b5d5b",
+          unit: 5,
+          authors: ["Aya Anodjo"]
+        },
+        {
+          objective: "Metabolic Accounting",
+          url: "https://effulgent-daifuku-414318.netlify.app/",
+          unit: 5,
+          authors: ["Alia Zahir"]
+        },
+        {
+          objective: "Unlock Levels of Life",
+          url: "https://view.genially.com/6a428676fc25b8043ef84f29",
+          unit: 5,
+          authors: ["Jennifer Sanchez"]
+        },
+        {
+          objective: "Adaptive Population Simulator",
+          url: "/adaptive-population-simulator.html",
+          unit: 5,
+          authors: ["Allysa Angelo"]
+        }
+      ];
+      parsedNotebooks.push(...extraCreditGames);
+
       console.log(`Parsed ${parsedNotebooks.length} notebooks. Resolving authors...`);
 
       // Match with syllabus/student assignments
       for (const nb of parsedNotebooks) {
+        if (nb.unit === 5) {
+          continue; // Keep authors as defined above
+        }
         const nbNorm = nb.objective.toLowerCase().trim().replace(/[\s\.\?,\!]+/g, " ");
         
         const matches = RAW_ASSIGNMENTS.filter(asg => {

@@ -83,7 +83,7 @@ export default function NotebookDirectory() {
   });
 
   const filteredNotebooks = selectedUnit === "all" 
-    ? sortedNotebooks 
+    ? sortedNotebooks.filter((nb) => nb.unit >= 1 && nb.unit <= 4)
     : sortedNotebooks.filter((nb) => nb.unit === selectedUnit);
 
   return (
@@ -110,12 +110,14 @@ export default function NotebookDirectory() {
           <div className="grid grid-cols-2 gap-4">
             <div className="p-4 rounded-none bg-black border border-white/5 text-left">
               <span className="block text-[10px] text-zinc-500 font-bold uppercase tracking-wider">Live Notebooks</span>
-              <span className="text-xl sm:text-2xl font-black text-[#cbff00] mt-0.5 block">{notebooks.length} Active</span>
+              <span className="text-xl sm:text-2xl font-black text-[#cbff00] mt-0.5 block">
+                {notebooks.filter(n => n.unit >= 1 && n.unit <= 4).length} Active
+              </span>
             </div>
             <div className="p-4 rounded-none bg-black border border-white/5 text-left">
               <span className="block text-[10px] text-zinc-500 font-bold uppercase tracking-wider">Co-Authors</span>
               <span className="text-xl sm:text-2xl font-black text-white mt-0.5 block">
-                {Array.from(new Set(notebooks.flatMap(n => n.authors))).filter(a => a !== "Independent Study").length} Students
+                {Array.from(new Set(notebooks.filter(n => n.unit >= 1 && n.unit <= 4).flatMap(n => n.authors))).filter(a => a !== "Independent Study").length} Students
               </span>
             </div>
           </div>
@@ -148,7 +150,7 @@ export default function NotebookDirectory() {
               : "bg-black hover:bg-zinc-900 border border-white/10 text-zinc-400 hover:text-white"
           }`}
         >
-          All Units ({notebooks.length})
+          All Units ({notebooks.filter(n => n.unit >= 1 && n.unit <= 4).length})
         </button>
         {[1, 2, 3, 4].map((unitNum) => {
           const count = notebooks.filter(n => n.unit === unitNum).length;
@@ -166,6 +168,16 @@ export default function NotebookDirectory() {
             </button>
           );
         })}
+        <button
+          onClick={() => setSelectedUnit(5)}
+          className={`px-4 py-2 text-[10px] font-mono font-bold uppercase tracking-widest rounded-none transition duration-150 focus:outline-none cursor-pointer ${
+            selectedUnit === 5
+              ? "bg-[#cbff00] text-black font-black"
+              : "bg-black hover:bg-zinc-900 border border-white/10 text-zinc-400 hover:text-white"
+          }`}
+        >
+          Extra-Credit Games ({notebooks.filter(n => n.unit === 5).length})
+        </button>
       </div>
 
       {/* Notebook directory grid */}
@@ -173,6 +185,7 @@ export default function NotebookDirectory() {
         <AnimatePresence mode="popLayout">
           {filteredNotebooks.map((nb, idx) => {
             const ch = getChapterForObjective(nb.objective);
+            const isGame = nb.unit === 5;
             return (
               <motion.article
                 key={`${nb.objective}-${nb.url}-${idx}`}
@@ -181,17 +194,34 @@ export default function NotebookDirectory() {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.95 }}
                 transition={{ duration: 0.4, delay: idx * 0.05 }}
-                className="group relative rounded-none bg-[#121212] border border-white/10 p-6 flex flex-col justify-between hover:border-white/20 hover:bg-[#121212]/95 transition duration-300 overflow-hidden self-stretch"
+                className={`group relative rounded-none bg-[#121212] border p-6 flex flex-col justify-between hover:bg-[#121212]/95 transition duration-300 overflow-hidden self-stretch ${
+                  isGame
+                    ? "border-[#cbff00]/30 shadow-lg shadow-[#cbff00]/5 hover:border-[#cbff00]/60"
+                    : "border-white/10 hover:border-white/20"
+                }`}
               >
                 <div className="space-y-4">
                   {/* Labels and chapters */}
                   <div className="flex justify-between items-center">
-                    <span className="text-[10px] uppercase font-bold tracking-widest font-mono p-1 px-2.5 bg-black border border-white/5 rounded-none text-white">
-                      Unit {nb.unit}
-                    </span>
-                    <span className="text-[10px] uppercase font-bold tracking-widest font-mono p-1 px-2.5 bg-[#cbff00]/10 text-[#cbff00] rounded-none">
-                      Chapter {ch === 999 ? "TBD" : ch}
-                    </span>
+                    {isGame ? (
+                      <>
+                        <span className="text-[10px] uppercase font-bold tracking-widest font-mono p-1 px-2.5 bg-[#cbff00]/10 border border-[#cbff00]/20 text-[#cbff00] rounded-none">
+                          Extra-Credit
+                        </span>
+                        <span className="text-[10px] uppercase font-bold tracking-widest font-mono p-1 px-2.5 bg-white/5 text-zinc-400 rounded-none">
+                          Interactive Game
+                        </span>
+                      </>
+                    ) : (
+                      <>
+                        <span className="text-[10px] uppercase font-bold tracking-widest font-mono p-1 px-2.5 bg-black border border-white/5 rounded-none text-white">
+                          Unit {nb.unit}
+                        </span>
+                        <span className="text-[10px] uppercase font-bold tracking-widest font-mono p-1 px-2.5 bg-[#cbff00]/10 text-[#cbff00] rounded-none">
+                          Chapter {ch === 999 ? "TBD" : ch}
+                        </span>
+                      </>
+                    )}
                   </div>
 
                   {/* Objective heading */}
@@ -199,26 +229,48 @@ export default function NotebookDirectory() {
                     {nb.objective}
                   </h3>
 
-                  {/* Interactive study features inside NotebookLM */}
-                  <div className="rounded-none border border-white/5 bg-black/60 p-3.5 space-y-2 text-left">
-                    <span className="text-[9px] uppercase font-bold tracking-widest font-mono text-zinc-500 block leading-none">
-                      Included Study Materials
-                    </span>
-                    <div className="flex flex-col gap-1.5 pt-1">
-                      <div className="flex items-center gap-2 text-xs text-zinc-300 font-light">
-                        <Music className="w-3.5 h-3.5 text-[#cbff00] shrink-0" />
-                        <span>AI Audio Overview (Double podcast host)</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-xs text-zinc-300 font-light">
-                        <Star className="w-3.5 h-3.5 text-[#cbff00] shrink-0" />
-                        <span>Interactive flashcard cards sets</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-xs text-zinc-300 font-light">
-                        <Layers className="w-3.5 h-3.5 text-[#cbff00] shrink-0" />
-                        <span>Textbook chapters & annotated slides</span>
+                  {/* Interactive study features inside NotebookLM / Games */}
+                  {isGame ? (
+                    <div className="rounded-none border border-[#cbff00]/10 bg-black/60 p-3.5 space-y-2 text-left">
+                      <span className="text-[9px] uppercase font-bold tracking-widest font-mono text-[#cbff00] block leading-none">
+                        Interactive Game Features
+                      </span>
+                      <div className="flex flex-col gap-1.5 pt-1">
+                        <div className="flex items-center gap-2 text-xs text-zinc-300 font-light">
+                          <Trophy className="w-3.5 h-3.5 text-[#cbff00] shrink-0" />
+                          <span>Earn bonus extra-credit points</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-xs text-zinc-300 font-light">
+                          <Compass className="w-3.5 h-3.5 text-[#cbff00] shrink-0" />
+                          <span>Gamified biological concepts review</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-xs text-zinc-300 font-light">
+                          <Star className="w-3.5 h-3.5 text-[#cbff00] shrink-0" />
+                          <span>Instant score & completion tracking</span>
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  ) : (
+                    <div className="rounded-none border border-white/5 bg-black/60 p-3.5 space-y-2 text-left">
+                      <span className="text-[9px] uppercase font-bold tracking-widest font-mono text-zinc-500 block leading-none">
+                        Included Study Materials
+                      </span>
+                      <div className="flex flex-col gap-1.5 pt-1">
+                        <div className="flex items-center gap-2 text-xs text-zinc-300 font-light">
+                          <Music className="w-3.5 h-3.5 text-[#cbff00] shrink-0" />
+                          <span>AI Audio Overview (Double podcast host)</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-xs text-zinc-300 font-light">
+                          <Star className="w-3.5 h-3.5 text-[#cbff00] shrink-0" />
+                          <span>Interactive flashcard cards sets</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-xs text-zinc-300 font-light">
+                          <Layers className="w-3.5 h-3.5 text-[#cbff00] shrink-0" />
+                          <span>Textbook chapters & annotated slides</span>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
 
                 {/* Card footer holding authors and the direct click launcher */}
@@ -226,7 +278,7 @@ export default function NotebookDirectory() {
                   {/* Student author credit */}
                   <div className="text-left">
                     <span className="text-[9px] uppercase tracking-wider font-bold text-zinc-500 block font-mono">
-                      Student Pioneer Author
+                      {isGame ? "Resource Curator" : "Student Pioneer Author"}
                     </span>
                     <div className="flex flex-wrap gap-1.5 mt-1">
                       {nb.authors.map((author) => (
@@ -245,9 +297,9 @@ export default function NotebookDirectory() {
                     href={nb.url}
                     target="_blank"
                     rel="noreferrer"
-                    className="w-full sm:w-auto px-4 py-2.5 bg-white hover:bg-[#cbff00] text-black font-black text-xs uppercase tracking-wider rounded-none transition flex items-center justify-center gap-1.5 focus:outline-none shrink-0"
+                    className="w-full sm:w-auto px-4 py-2.5 bg-white hover:bg-[#cbff00] text-black font-black text-xs uppercase tracking-wider rounded-none transition flex items-center justify-center gap-1.5 focus:outline-none shrink-0 cursor-pointer"
                   >
-                    Open Notebook
+                    {isGame ? "Play Game" : "Open Notebook"}
                     <ExternalLink className="w-3.5 h-3.5 stroke-[2.5]" />
                   </a>
                 </div>
