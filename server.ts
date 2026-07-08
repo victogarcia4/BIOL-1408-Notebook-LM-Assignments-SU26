@@ -106,6 +106,17 @@ async function startServer() {
       ];
       parsedNotebooks.push(...extraCreditGames);
 
+      // Add manually injected notebooks that are not yet in the Google Doc template
+      const manualNotebooks = [
+        {
+          objective: "Describe prokaryotic gene regulation at the transcriptional level.",
+          url: "https://notebooklm.google.com/notebook/228d7264-4c23-45cd-a897-dec23f52fb42",
+          unit: 4,
+          authors: []
+        }
+      ];
+      parsedNotebooks.push(...manualNotebooks);
+
       console.log(`Parsed ${parsedNotebooks.length} notebooks. Resolving authors...`);
 
       // Match with syllabus/student assignments
