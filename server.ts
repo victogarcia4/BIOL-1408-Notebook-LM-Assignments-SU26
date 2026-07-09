@@ -64,6 +64,12 @@ async function startServer() {
               continue;
             }
 
+            // Standard syllabus notebooks are exclusively NotebookLM links. Filter out games/artifacts listed in the syllabus under Unit 4.
+            if (!url.includes("notebooklm.google.com")) {
+              console.log(`Skipping non-NotebookLM link from standard parsing: ${url}`);
+              continue;
+            }
+
             const objPart = part.substring(0, part.indexOf(urlMatch[1]));
             const objective = objPart.replace(/^\d+\.\s*/, "").trim().replace(/[\s\.\?,\!]+$/, "");
             
@@ -102,6 +108,12 @@ async function startServer() {
           url: "/adaptive-population-simulator.html",
           unit: 5,
           authors: ["Allysa Angelo"]
+        },
+        {
+          objective: "Photon Pimball",
+          url: "https://claude.ai/public/artifacts/61bf3369-207e-43bb-b1b7-491cc147e841",
+          unit: 5,
+          authors: ["Sharissa Richard"]
         }
       ];
       parsedNotebooks.push(...extraCreditGames);
