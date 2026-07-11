@@ -87,7 +87,7 @@ async function startServer() {
       const extraCreditGames = [
         {
           objective: "Chemical MatchMaker",
-          url: "https://ai.studio/apps/9a7a8ba0-b730-4dd0-90ce-8f03496b5d5b",
+          url: "https://chemical-matchmaker-125901413618.us-east1.run.app/",
           unit: 5,
           authors: ["Aya Anodjo"]
         },
@@ -114,6 +114,12 @@ async function startServer() {
           url: "https://claude.ai/public/artifacts/61bf3369-207e-43bb-b1b7-491cc147e841",
           unit: 5,
           authors: ["Sharissa Richard"]
+        },
+        {
+          objective: "Biology Lab Scape",
+          url: "https://aistudio.google.com/apps/4db6762f-1ddb-43b5-9663-390f97184774?showPreview=true&showAssistant=true&fullscreenApplet=true",
+          unit: 5,
+          authors: ["Independent Study"]
         }
       ];
       parsedNotebooks.push(...extraCreditGames);
@@ -123,6 +129,12 @@ async function startServer() {
         {
           objective: "Describe prokaryotic gene regulation at the transcriptional level.",
           url: "https://notebooklm.google.com/notebook/228d7264-4c23-45cd-a897-dec23f52fb42",
+          unit: 4,
+          authors: []
+        },
+        {
+          objective: "Discuss how understanding gene-expression regulation can lead to better drug design.",
+          url: "https://notebooklm.google.com/notebook/cce10f3c-68d7-4f30-8d3b-c536111273b5",
           unit: 4,
           authors: []
         }
