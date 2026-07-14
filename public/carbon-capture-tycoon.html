@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Carbon Capture Tycoon</title>
+  <style>
+    :root {
+      --bg: #f4fbf7;
+      --card: #ffffff;
+      --ink: #17324d;
+      --green: #2f9e44;
+      --blue: #1c6dd0;
+      --gold: #f4b400;
+      --red: #c92a2a;
+      --soft: #e8f5ec;
+      --border: #cfd8dc;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.5;
+    }
+    .wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    h1, h2, h3 { margin-top: 0; }
+    .hero, .panel {
+      background: var(--card);
+      border: 2px solid var(--border);
+      border-radius: 18px;
+      padding: 20px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.04);
+      margin-bottom: 18px;
+    }
+    .hero {
+      border-left: 10px solid var(--green);
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 18px;
+    }
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 12px;
+      margin: 16px 0;
+    }
+    .stat {
+      background: var(--soft);
+      border-radius: 14px;
+      padding: 12px;
+      border: 1px solid #b7e4c7;
+    }
+    .stat strong {
+      display: block;
+      font-size: 1.4rem;
+      margin-top: 6px;
+    }
+    button {
+      background: var(--blue);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-size: 1rem;
+      cursor: pointer;
+      margin: 6px 6px 6px 0;
+    }
+    button:hover { filter: brightness(0.95); }
+    button.secondary { background: var(--green); }
+    button.warn { background: var(--gold); color: #222; }
+    button.danger { background: var(--red); }
+    .feedback {
+      margin-top: 12px;
+      padding: 12px;
+      border-radius: 12px;
+      background: #f7f9fb;
+      border: 1px solid var(--border);
+      min-height: 66px;
+    }
+    .choices label, .drag-item {
+      display: block;
+      background: #f8fbff;
+      border: 1px solid #c6d4e1;
+      padding: 10px;
+      border-radius: 10px;
+      margin: 8px 0;
+    }
+    .dropzone {
+      min-height: 52px;
+      border: 2px dashed #8bb3d9;
+      background: #f5fbff;
+      border-radius: 12px;
+      padding: 10px;
+      margin: 10px 0;
+    }
+    .small { font-size: 0.95rem; }
+    .badge {
+      display: inline-block;
+      background: #def7e5;
+      color: #156f2f;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-weight: bold;
+      margin-right: 8px;
+    }
+    ul { padding-left: 20px; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="hero">
+      <div class="badge">Unit 2</div>
+      <div class="badge">Carbon Capture Tycoon</div>
+      <h1>Carbon Capture Tycoon</h1>
+      <p><strong>Learning objective:</strong> Analyze how Rubisco fixes inorganic carbon dioxide into organic sugars using the chemical energy produced in the light reactions.</p>
+      <p class="small">Goal: earn ATP and NADPH, fix CO2, build G3P, and explain the Calvin Cycle correctly.</p>
+    </div>
+
+    <div class="panel">
+      <h2>Game Dashboard</h2>
+      <div class="stats">
+        <div class="stat">ATP<strong id="atp">0</strong></div>
+        <div class="stat">NADPH<strong id="nadph">0</strong></div>
+        <div class="stat">CO2 Fixed<strong id="co2">0</strong></div>
+        <div class="stat">G3P Made<strong id="g3p">0</strong></div>
+        <div class="stat">Score<strong id="score">0</strong></div>
+      </div>
+      <button class="secondary" id="makeATP">Run Light Module: +3 ATP</button>
+      <button class="secondary" id="makeNADPH">Run Light Module: +2 NADPH</button>
+      <button class="warn" id="fixCO2">Use Rubisco to Fix CO2</button>
+      <div class="feedback" id="mainFeedback">Use the light modules first. Then spend ATP and NADPH to move carbon through the Calvin Cycle.</div>
+    </div>
+
+    <div class="grid">
+      <div class="panel">
+        <h2>Interaction 1: Resource Management</h2>
+        <p>Choose the best explanation of why ATP and NADPH matter.</p>
+        <div class="choices">
+          <label><input type="radio" name="q1" value="a"> ATP and NADPH are waste products that plants remove.</label>
+          <label><input type="radio" name="q1" value="b"> ATP provides energy and NADPH provides high-energy electrons used to help build sugar molecules.</label>
+          <label><input type="radio" name="q1" value="c"> ATP is carbon and NADPH is oxygen.</label>
+        </div>
+        <button onclick="checkQ1()">Check Answer</button>
+        <div class="feedback" id="q1Feedback"></div>
+      </div>
+
+      <div class="panel">
+        <h2>Interaction 2: Sequence the Calvin Cycle</h2>
+        <p>Put the three major stages in order.</p>
+        <div id="bank" class="dropzone">
+          <div class="drag-item" draggable="true" data-step="Regeneration">Regeneration</div>
+          <div class="drag-item" draggable="true" data-step="Reduction">Reduction</div>
+          <div class="drag-item" draggable="true" data-step="Carbon Fixation">Carbon Fixation</div>
+        </div>
+        <div class="dropzone" data-slot="0">Step 1</div>
+        <div class="dropzone" data-slot="1">Step 2</div>
+        <div class="dropzone" data-slot="2">Step 3</div>
+        <button onclick="checkSequence()">Check Sequence</button>
+        <div class="feedback" id="seqFeedback"></div>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="panel">
+        <h2>Interaction 3: Rubisco Decision</h2>
+        <p>What does Rubisco do in the Calvin Cycle?</p>
+        <div class="choices">
+          <label><input type="radio" name="q2" value="a"> It splits water to make oxygen.</label>
+          <label><input type="radio" name="q2" value="b"> It captures light directly from the sun.</label>
+          <label><input type="radio" name="q2" value="c"> It helps attach CO2 to RuBP, starting carbon fixation.</label>
+        </div>
+        <button onclick="checkQ2()">Check Answer</button>
+        <div class="feedback" id="q2Feedback"></div>
+      </div>
+
+      <div class="panel">
+        <h2>Win Condition</h2>
+        <p>To make 1 G3P in this game, collect enough energy and fix enough carbon:</p>
+        <ul>
+          <li>At least <strong>6 ATP</strong></li>
+          <li>At least <strong>4 NADPH</strong></li>
+          <li>At least <strong>3 CO2 fixed</strong></li>
+        </ul>
+        <button class="danger" onclick="buildG3P()">Build G3P</button>
+        <div class="feedback" id="g3pFeedback">When you have enough resources, build G3P.</div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h2>Reflection</h2>
+      <p>This game teaches that the light reactions and the Calvin Cycle are connected. The light reactions make ATP and NADPH. The Calvin Cycle uses those molecules to help turn CO2 into sugars. Rubisco begins the carbon fixation step by attaching carbon dioxide to RuBP.</p>
+    </div>
+  </div>
+
+  <script>
+    const state = { atp: 0, nadph: 0, co2: 0, g3p: 0, score: 0 };
+    const ids = ['atp','nadph','co2','g3p','score'];
+    function render(){ ids.forEach(id => document.getElementById(id).textContent = state[id]); }
+    function addFeedback(id, msg){ document.getElementById(id).textContent = msg; }
+
+    document.getElementById('makeATP').onclick = () => {
+      state.atp += 3; state.score += 5; render();
+      addFeedback('mainFeedback', 'ATP made. ATP gives energy that helps power the Calvin Cycle.');
+    };
+
+    document.getElementById('makeNADPH').onclick = () => {
+      state.nadph += 2; state.score += 5; render();
+      addFeedback('mainFeedback', 'NADPH made. NADPH carries high-energy electrons used to help reduce carbon into sugar.');
+    };
+
+    document.getElementById('fixCO2').onclick = () => {
+      if (state.atp >= 2 && state.nadph >= 1) {
+        state.atp -= 2;
+        state.nadph -= 1;
+        state.co2 += 1;
+        state.score += 10;
+        addFeedback('mainFeedback', 'CO2 fixed. Rubisco starts carbon fixation by attaching CO2 to RuBP. Energy molecules are then used to keep the cycle moving.');
+      } else {
+        addFeedback('mainFeedback', 'Not enough energy. You need ATP and NADPH from the light reactions before carbon fixation can continue well.');
+      }
+      render();
+    };
+
+    function checkQ1(){
+      const picked = document.querySelector('input[name="q1"]:checked');
+      if (!picked) return addFeedback('q1Feedback', 'Pick an answer first.');
+      if (picked.value === 'b') {
+        state.score += 10;
+        addFeedback('q1Feedback', 'Correct. ATP provides usable energy, and NADPH carries electrons that help convert carbon compounds into higher-energy sugars.');
+      } else {
+        addFeedback('q1Feedback', 'Not quite. ATP is the main energy source, and NADPH carries electrons. They are both made in the light reactions and used in the Calvin Cycle.');
+      }
+      render();
+    }
+
+    function checkQ2(){
+      const picked = document.querySelector('input[name="q2"]:checked');
+      if (!picked) return addFeedback('q2Feedback', 'Pick an answer first.');
+      if (picked.value === 'c') {
+        state.score += 10;
+        addFeedback('q2Feedback', 'Correct. Rubisco helps attach CO2 to RuBP. That is the first major step of carbon fixation in the Calvin Cycle.');
+      } else {
+        addFeedback('q2Feedback', 'Incorrect. Splitting water happens in the light reactions, and pigments capture light. Rubisco works in the Calvin Cycle to fix carbon dioxide.');
+      }
+      render();
+    }
+
+    let dragged = null;
+    document.addEventListener('dragstart', e => {
+      if (e.target.classList.contains('drag-item')) dragged = e.target;
+    });
+    document.querySelectorAll('.dropzone').forEach(zone => {
+      zone.addEventListener('dragover', e => e.preventDefault());
+      zone.addEventListener('drop', e => {
+        e.preventDefault();
+        if (dragged && zone.dataset.slot !== undefined) {
+          zone.textContent = dragged.dataset.step;
+        }
+      });
+    });
+
+    function checkSequence(){
+      const correct = ['Carbon Fixation','Reduction','Regeneration'];
+      const zones = [...document.querySelectorAll('.dropzone[data-slot]')];
+      const answers = zones.map(z => z.textContent.trim());
+      if (answers.every((a,i) => a === correct[i])) {
+        state.score += 15;
+        addFeedback('seqFeedback', 'Correct order. First carbon fixation, then reduction, then regeneration of RuBP so the cycle can continue.');
+      } else {
+        addFeedback('seqFeedback', 'Try again. The cycle starts with carbon fixation, then uses ATP and NADPH during reduction, and ends with regeneration of RuBP.');
+      }
+      render();
+    }
+
+    function buildG3P(){
+      if (state.atp >= 6 && state.nadph >= 4 && state.co2 >= 3) {
+        state.atp -= 6;
+        state.nadph -= 4;
+        state.co2 -= 3;
+        state.g3p += 1;
+        state.score += 25;
+        addFeedback('g3pFeedback', 'Success. You built G3P. This shows how ATP, NADPH, and fixed carbon work together to make an organic sugar product.');
+      } else {
+        addFeedback('g3pFeedback', 'You need more resources. Keep making ATP and NADPH and fix more CO2 before building G3P.');
+      }
+      render();
+    }
+
+    render();
+  </script>
+</body>
+</html>

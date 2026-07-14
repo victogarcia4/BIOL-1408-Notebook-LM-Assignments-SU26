@@ -137,6 +137,12 @@ async function startServer() {
           url: "https://aistudio.google.com/apps/a84f885e-cf06-4d8e-9440-90f65529a71d?showPreview=true&showAssistant=true&fullscreenApplet=true",
           unit: 5,
           authors: ["Alexa Hernandez"]
+        },
+        {
+          objective: "Carbon Capture Tycoon",
+          url: "/carbon-capture-tycoon.html",
+          unit: 5,
+          authors: ["Laura Williams"]
         }
       ];
       parsedNotebooks.push(...extraCreditGames);
