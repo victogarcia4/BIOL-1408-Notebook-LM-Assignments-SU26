@@ -137,11 +137,32 @@ async function startServer() {
           url: "https://notebooklm.google.com/notebook/cce10f3c-68d7-4f30-8d3b-c536111273b5",
           unit: 4,
           authors: []
+        },
+        {
+          objective: "Explain relationships between genotypes and phenotypes in dominant and recessive gene systems.",
+          url: "https://notebooklm.google.com/notebook/3fc31242-0bb7-48ad-a25a-f8391d0315aa",
+          unit: 3,
+          authors: []
         }
       ];
       parsedNotebooks.push(...manualNotebooks);
 
-      console.log(`Parsed ${parsedNotebooks.length} notebooks. Resolving authors...`);
+      // Deduplicate parsedNotebooks by URL so we do not have duplicates
+      const seenUrls = new Set<string>();
+      const deduplicated: any[] = [];
+      for (const nb of parsedNotebooks) {
+        const normUrl = nb.url.toLowerCase().trim();
+        if (seenUrls.has(normUrl)) {
+          console.log(`Skipping duplicate URL: ${nb.objective} (${nb.url})`);
+          continue;
+        }
+        seenUrls.add(normUrl);
+        deduplicated.push(nb);
+      }
+      parsedNotebooks.length = 0;
+      parsedNotebooks.push(...deduplicated);
+
+      console.log(`Parsed ${parsedNotebooks.length} unique notebooks. Resolving authors...`);
 
       // Match with syllabus/student assignments
       for (const nb of parsedNotebooks) {
