@@ -130,7 +130,13 @@ async function startServer() {
           objective: "Biology Lab Scape",
           url: "https://aistudio.google.com/apps/4db6762f-1ddb-43b5-9663-390f97184774?showPreview=true&showAssistant=true&fullscreenApplet=true",
           unit: 5,
-          authors: ["Independent Study"]
+          authors: ["Maqueila Garcia"]
+        },
+        {
+          objective: "Enzyme Kinetics & Inhibition Lab",
+          url: "https://aistudio.google.com/apps/a84f885e-cf06-4d8e-9440-90f65529a71d?showPreview=true&showAssistant=true&fullscreenApplet=true",
+          unit: 5,
+          authors: ["Alexa Hernandez"]
         }
       ];
       parsedNotebooks.push(...extraCreditGames);
